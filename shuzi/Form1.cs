@@ -14,6 +14,8 @@ namespace shuzi
     public partial class Form1 : Form
     {
         public static Bitmap drawmap;
+        public static string pipeiFilepath;//静态变量便于画板传回路径
+        private static int FinallResult;
         public Form1()
         {
             InitializeComponent();
@@ -35,24 +37,30 @@ namespace shuzi
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            if (textBox2.Text.Length<1)
+           
+            {
+                MessageBox.Show("请输入准备导入的图片的正确数字");
+                return;
+            }
+            if (width.Text.Length < 1 || height.Text.Length < 1)
+            {
+                MessageBox.Show("请输入准备切割图片大小！");
+                return;
+            }
                 
                 Bitmap thePic = new Bitmap(Path.Text);
                 String data;
                 data = picCut(thePic,pictureBox1,pictureBox3);
                 data = textBox2.Text + data;
                 MessageBox.Show(data + "----------" + data.Length.ToString());
-                if (File.Exists("data.txt") == false)
-                {
-                    File.Create("data.txt");
-                }
                 FileStream fs = new FileStream("data.txt", FileMode.Append);
                 StreamWriter writeStream = new StreamWriter(fs);
                 writeStream.WriteLine(data + "\n");
                 writeStream.Flush();
                 fs.Flush();
                 fs.Close();
-                MessageBox.Show("导入成功！");
+                MessageBox.Show("学习成功！");
           
             
            
@@ -159,25 +167,31 @@ namespace shuzi
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = dialog.FileName;
+                Form1.pipeiFilepath = dialog.FileName;
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)
         {
             try
             {
+                if (width.Text.Length < 1 || height.Text.Length < 1)
+                {
+                    MessageBox.Show("请输入准备切割图片大小！");
+                    return;
+                }
                 richTextBox1.Clear();
-                Bitmap thePic_0 = new Bitmap(textBox1.Text);
+                Bitmap thePic_0 = new Bitmap(Form1.pipeiFilepath);
                 Bitmap headPic = thePic_0.Clone(new Rectangle(0, 0, thePic_0.Width, thePic_0.Height), PixelFormat.Format24bppRgb);
                 String data;
                 data = picCut(headPic, pictureBox2,pictureBox4);
 
-                StreamReader read = File.OpenText(@".\data.txt");
-                string a;
+               
                 int[] result = new int[10];
                 for (int x = 0; x < 10; x++)
                     result[x] = int.Parse(width.Text) * int.Parse(height.Text);
-
+                StreamReader read = File.OpenText(@".\data.txt");
+                string a;
                 while ((a = read.ReadLine()) != null)
                 {
                     read.ReadLine();//吃掉\n
@@ -191,10 +205,11 @@ namespace shuzi
                 }
                 int finallRes = result[0];
                 int num = 0;
+                richTextBox1.AppendText("对应数字--------欧氏距离\n");
                 for (int x = 0; x < 10; x++)
                 {
 
-                    richTextBox1.AppendText((result[x]).ToString() + "----" + x.ToString() + '\n');
+                    richTextBox1.AppendText(  x.ToString()+ "----------" + (result[x]).ToString() + '\n');
                     if (result[x] < finallRes)
                     {
                         finallRes = result[x];
@@ -203,12 +218,17 @@ namespace shuzi
                 }
                 richTextBox1.AppendText("--------------\n" + "最后匹配的结果为" + num.ToString() + '\n');
 
-
+                
                 read.Close();
+                FinallResult = num;
+                button8.Enabled = true;
+                button7.Enabled = true;
+                
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
+               
             }
             
         }
@@ -251,7 +271,99 @@ namespace shuzi
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            button7.Enabled = false;
+            button8.Enabled = false;
+        }
 
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (textBox3.Text.Length < 1)
+            {
+                MessageBox.Show("请输入正确的数字");
+                return;
+            }
+            Bitmap thePic = new Bitmap(pipeiFilepath);
+            String data;
+            data = picCut(thePic, pictureBox1, pictureBox3);
+            data = textBox3.Text + data;
+            MessageBox.Show(data + "----------" + data.Length.ToString());
+            if (File.Exists("data.txt") == false)
+            {
+                File.Create("data.txt");
+            }
+            FileStream fs = new FileStream("data.txt", FileMode.Append);
+            StreamWriter writeStream = new StreamWriter(fs);
+            writeStream.WriteLine(data + "\n");
+            writeStream.Flush();
+            fs.Flush();
+            fs.Close();
+            MessageBox.Show("学习成功！");
+            FileStream fss = new FileStream("data.log", FileMode.Append);
+            StreamWriter writeStreamm = new StreamWriter(fss);
+            //时间 错误 实际 本应该是
+            writeStreamm.WriteLine(DateTime.Now.ToString("yyyyMMddhhmmss") +" " + "" + FinallResult.ToString() + "" + "" + textBox3.Text + ""+ "错误" + "\n");
+            writeStreamm.Flush();
+            fss.Flush();
+            fss.Close();
+            button7.Enabled = false;
+            button8.Enabled = false;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            
+            FileStream fs = new FileStream("data.log", FileMode.Append);
+            StreamWriter writeStream = new StreamWriter(fs);
+            writeStream.WriteLine(DateTime.Now.ToString("yyyyMMddhhmmss") +" "+""+FinallResult.ToString()+""+""+FinallResult.ToString()+""+ "正确" +"\n");
+            writeStream.Flush();
+            fs.Flush();
+            fs.Close();
+            button7.Enabled = false;
+            button8.Enabled = false;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            int all=0;
+            int rightall = 0;
+            StreamReader read = File.OpenText(@".\data.log");
+            int[][] result = new int[2][];
+            result[0] = new int[10] {0,0,0,0,0,0,0,0,0,0};
+            result[1] = new int[10] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            string a;
+            while ((a = read.ReadLine()) != null)
+            {
+                read.ReadLine();//吃掉\n
+                all++;
+                result[1][a.ToCharArray()[16] - '0']++;
+                //
+                if (a.Substring(17) == "正确")
+                {
+                    //MessageBox.Show(a.Substring(17));
+                    rightall++;
+                }
+                if (a.ToCharArray()[16] == a.ToCharArray()[15])
+               {
+                    result[0][a.ToCharArray()[16] - '0']++;
+                }
+                
+
+            }
+            if (all != 0)
+            {
+               richTextBox1.AppendText( "总识别率为   "+(((double)rightall) / ((double)all) * 100.0).ToString() + "%\n");
+            }
+            else
+                richTextBox1.AppendText ( "没有历史数据！\n");
+            for (int c = 0; c < 10; c++)
+            {
+                if (result[1][c] != 0)
+                    richTextBox1.AppendText("" + c + "的识别率为   " + (((double)result[0][c] /(double)result[1][c])*100).ToString() + '%'+'\n');
+                else
+                    richTextBox1.AppendText("" + c + "没有数据"+ '\n');
+            }
+            
         }
     }
 }

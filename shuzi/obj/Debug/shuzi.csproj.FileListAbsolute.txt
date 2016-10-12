@@ -1,10 +1,9 @@
 F:\workbench\C#\shuzi\shuzi\bin\Debug\shuzi.exe.config
 F:\workbench\C#\shuzi\shuzi\bin\Debug\shuzi.exe
 F:\workbench\C#\shuzi\shuzi\bin\Debug\shuzi.pdb
+F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.draw.resources
 F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.Form1.resources
 F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.Properties.Resources.resources
 F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.csproj.GenerateResource.Cache
 F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.exe
 F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.pdb
-F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.draw.resources
-F:\workbench\C#\shuzi\shuzi\obj\Debug\shuzi.csprojResolveAssemblyReference.cache

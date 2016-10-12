@@ -69,10 +69,15 @@ namespace shuzi
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            pictureBox1.DrawToBitmap(pic, new Rectangle(0, 0, pic.Width, pic.Height));
+           
+           // button1.Text = DateTime.Now.ToString("yyyyMMddhhmmss");
             
-            pic.Save(@"./test.bmp");
+            pictureBox1.DrawToBitmap(pic, new Rectangle(0, 0, pic.Width, pic.Height));
+            Form1.pipeiFilepath = @"./handdraw/" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".bmp";
+            pic.Save(Form1.pipeiFilepath);
+            
+           
+            
             this.Close();
         }
 
