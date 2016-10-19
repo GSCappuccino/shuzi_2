@@ -19,7 +19,7 @@ namespace shuzi
         public Form1()
         {
             InitializeComponent();
-          
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,8 +37,8 @@ namespace shuzi
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (textBox2.Text.Length<1)
-           
+            if (textBox2.Text.Length < 1)
+
             {
                 MessageBox.Show("请输入准备导入的图片的正确数字");
                 return;
@@ -48,40 +48,40 @@ namespace shuzi
                 MessageBox.Show("请输入准备切割图片大小！");
                 return;
             }
-                
-                Bitmap thePic = new Bitmap(Path.Text);
-                String data;
-                data = picCut(thePic,pictureBox1,pictureBox3);
-                data = textBox2.Text + data;
-                MessageBox.Show(data + "----------" + data.Length.ToString());
-                FileStream fs = new FileStream("data.txt", FileMode.Append);
-                StreamWriter writeStream = new StreamWriter(fs);
-                writeStream.WriteLine(data + "\n");
-                writeStream.Flush();
-                fs.Flush();
-                fs.Close();
-                MessageBox.Show("学习成功！");
-          
-            
-           
+
+            Bitmap thePic = new Bitmap(Path.Text);
+            String data;
+            data = picCut(thePic, pictureBox1, pictureBox3);
+            data = textBox2.Text + data;
+            MessageBox.Show(data + "----------" + data.Length.ToString());
+            FileStream fs = new FileStream("data.txt", FileMode.Append);
+            StreamWriter writeStream = new StreamWriter(fs);
+            writeStream.WriteLine(data + "\n");
+            writeStream.Flush();
+            fs.Flush();
+            fs.Close();
+            MessageBox.Show("学习成功！");
+
+
+
 
         }
         private String picCut(Bitmap thePic, PictureBox aa, PictureBox bb)//切割图片以及显示方块和二值图片
         {
             String data = null;
-           
+
             // MessageBox.Show(thePic.GetPixel(1,1).B.ToString());
             Bitmap blackWhite = ConvertTo1Bpp(thePic);
             aa.Width = blackWhite.Width;
             aa.Height = blackWhite.Height;
             aa.Image = blackWhite;//显示图像
 
-            
+
 
             for (int zong = 0; zong < int.Parse(height.Text); zong++)
                 for (int heng = 0; heng < int.Parse(width.Text); heng++)
                 {
-                    data = data + "" + turnPic(heng, zong,thePic.Width / int.Parse(width.Text) ,thePic.Height /int.Parse( height.Text) , blackWhite).ToString() + "";
+                    data = data + "" + turnPic(heng, zong, thePic.Width / int.Parse(width.Text), thePic.Height / int.Parse(height.Text), blackWhite).ToString() + "";
                 }
 
 
@@ -89,18 +89,18 @@ namespace shuzi
             for (int zong = 0; zong < int.Parse(height.Text); zong++)
                 for (int heng = 0; heng < int.Parse(width.Text); heng++)
                 {
-                    if((data.ToCharArray()[zong* int.Parse(width.Text) + heng]-'0')>0)
-                        setPic(heng, zong, 200/ int.Parse(width.Text),200/ int.Parse(height.Text) , newPic,Color.Black);
+                    if ((data.ToCharArray()[zong * int.Parse(width.Text) + heng] - '0') > 0)
+                        setPic(heng, zong, 200 / int.Parse(width.Text), 200 / int.Parse(height.Text), newPic, Color.Black);
                     else
                         setPic(heng, zong, 200 / int.Parse(width.Text), 200 / int.Parse(height.Text), newPic, Color.White);
                     bb.Image = newPic;
-                  
+
                 }
 
 
-            
-                    return data;
-                
+
+            return data;
+
         }
         public static Bitmap ConvertTo1Bpp(Bitmap bmp)//二值化
         {
@@ -123,38 +123,38 @@ namespace shuzi
                     //获取该点的像素的RGB的颜色
                     Color color = bmp.GetPixel(i, j);
                     int value = 255 - color.B;
-                    Color newColor = value > average ? Color.FromArgb(0, 0, 0) : Color.FromArgb(255,255, 255);
-                   
-                    
+                    Color newColor = value > average ? Color.FromArgb(0, 0, 0) : Color.FromArgb(255, 255, 255);
+
+
                     newImg.SetPixel(i, j, newColor);
                 }
             }
-       
+
             return newImg;
         }
-        private int turnPic(int heng,int zong,int eachWidth,int eachHeight,Bitmap blackWhite)//返回数据01
+        private int turnPic(int heng, int zong, int eachWidth, int eachHeight, Bitmap blackWhite)//返回数据01
         {
-          //  MessageBox.Show(blackWhite.Height.ToString()+'-'+ eachHeight.ToString());
+            //  MessageBox.Show(blackWhite.Height.ToString()+'-'+ eachHeight.ToString());
             for (int eachHei = 0; eachHei < eachHeight; eachHei++)
                 for (int eachWid = 0; eachWid < eachWidth; eachWid++)
                 {
                     if (int.Parse(blackWhite.GetPixel(eachWidth * heng + eachWid, eachHeight * zong + eachHei).B.ToString()) != 0)
                     {
-                        return 0;
+                        return 0;//白色的返回0
                     }
 
                 }
-            return 1;
+            return 1;//黑色的返回1
         }
-        private void setPic(int heng, int zong, int eachWidth, int eachHeight, Bitmap blackWhite,Color color)//给一张图片赋值
+        private void setPic(int heng, int zong, int eachWidth, int eachHeight, Bitmap blackWhite, Color color)//给一张图片赋值
         {
             for (int a = 0; a < eachHeight; a++)
                 for (int b = 0; b < eachWidth; b++)
                 {
                     // if (int.Parse(blackWhite.GetPixel().B.ToString()) != 0)
-                    blackWhite.SetPixel(eachWidth * heng + b, eachHeight * zong + a,color);
+                    blackWhite.SetPixel(eachWidth * heng + b, eachHeight * zong + a, color);
                 }
-            
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -171,7 +171,133 @@ namespace shuzi
             }
         }
 
-        public void button4_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)//欧氏距离匹配法
+        {
+
+            switch (listBox1.SelectedIndex)
+            {
+                case -1:
+                    MessageBox.Show("请选择匹配方式！");
+                    break;
+                case 0:
+                    ouShiJuLiPiPei();
+                    break;
+                case 1:
+                    bysZuiXiaoCuoWu();
+                    break;
+                case 2:
+                    bysZuiXiaoFengXian();
+                    break;
+                case 3:
+                    bysErZhiShuJu();
+                    break;
+                default: return;
+            }
+
+        }
+
+        private void bysErZhiShuJu()
+        {
+            //计算先验概率
+            double N = 0;
+            int[] Ni = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+
+            StreamReader read = File.OpenText(@".\data.txt");
+            string a;
+            while ((a = read.ReadLine()) != null)
+            {
+
+                read.ReadLine();//吃掉\n
+                N++;
+                Ni[a.ToCharArray()[0] - '0']++;
+            }
+            double[] PWi = { Ni[0] / N, Ni[1] / N, Ni[2] / N, Ni[3] / N, Ni[4] / N, Ni[5] / N, Ni[6] / N, Ni[7] / N, Ni[8] / N, Ni[9] / N };
+            //计算类条件概率
+           
+            StreamReader readd = File.OpenText(@".\data.txt");
+            string aa;
+            int[,] tongji = new int[10, int.Parse(width.Text) * int.Parse(height.Text)];
+            double[,] PjWi = new double[10, int.Parse(width.Text) * int.Parse(height.Text)];
+            for (int x = 0; x < 10; x++)
+                for (int y = 0; y < int.Parse(width.Text) * int.Parse(height.Text); y++)
+                    PjWi[x, y] = 0;
+
+            while ((aa = readd.ReadLine()) != null)
+            {
+                readd.ReadLine();//吃掉\n  
+                for (int i = 0; i < int.Parse(width.Text) * int.Parse(height.Text); i++)
+                {
+                    if (aa.ToCharArray()[i + 1] == '0')
+                        PjWi[aa.ToCharArray()[0] - '0', i]++;
+
+                }
+            }
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < int.Parse(width.Text) * int.Parse(height.Text); y++)
+                {
+                    PjWi[x, y] = (PjWi[x, y] + 1.0) / (Ni[x] + 2.0);
+
+                }
+            }
+
+            if (width.Text.Length < 1 || height.Text.Length < 1)
+            {
+                MessageBox.Show("请输入准备切割图片大小！");
+                return;
+            }
+            double[] PXWi = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+            richTextBox1.Clear();
+            Bitmap thePic_0 = new Bitmap(Form1.pipeiFilepath);
+            Bitmap headPic = thePic_0.Clone(new Rectangle(0, 0, thePic_0.Width, thePic_0.Height), PixelFormat.Format24bppRgb);
+            String data;
+            data = picCut(headPic, pictureBox2, pictureBox4);
+            richTextBox1.AppendText("条件概率：\n");
+            for (int j = 0; j < 10; j++)
+            {
+                for (int i = 0; i < int.Parse(width.Text) * int.Parse(height.Text); i++)
+                {
+                    if (data.ToCharArray()[i] == '0')
+                        PXWi[j] = PXWi[j] * PjWi[j, i];
+                    else
+                        PXWi[j] = PXWi[j] * (1 - PjWi[j, i]);
+                }
+                richTextBox1.AppendText(j.ToString()+'-'+PXWi[j].ToString()+'\n');
+                
+            }
+            //求后验概率
+            double sum=0;
+            for (int i = 0; i < 10; i++)
+            {
+                sum = sum + PXWi[i] * PWi[i];
+            }
+            double[] result = { 0,0,0,0,0,0,0,0,0,0 };
+            richTextBox1.AppendText("后验概率:\n");
+            for(int i=0;i<10;i++)
+            {
+                result[i] = PWi[i] * PXWi[i] / sum;
+                richTextBox1.AppendText(i.ToString()+'-'+result[i].ToString()+'\n'); 
+            }
+            int finall = 0;
+            double temp = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                if (result[i] > temp)
+                {
+                    temp = result[i];
+                    finall = i;
+                }
+            }
+            richTextBox1.AppendText(finall.ToString()+'\n');
+            FinallResult = finall;
+            button8.Enabled = true;
+            button7.Enabled = true;
+
+        }
+
+        private void ouShiJuLiPiPei()
         {
             try
             {
@@ -184,9 +310,9 @@ namespace shuzi
                 Bitmap thePic_0 = new Bitmap(Form1.pipeiFilepath);
                 Bitmap headPic = thePic_0.Clone(new Rectangle(0, 0, thePic_0.Width, thePic_0.Height), PixelFormat.Format24bppRgb);
                 String data;
-                data = picCut(headPic, pictureBox2,pictureBox4);
+                data = picCut(headPic, pictureBox2, pictureBox4);
 
-               
+
                 int[] result = new int[10];
                 for (int x = 0; x < 10; x++)
                     result[x] = int.Parse(width.Text) * int.Parse(height.Text);
@@ -197,7 +323,7 @@ namespace shuzi
                     read.ReadLine();//吃掉\n
 
                     string per = piPei(a, data).ToString();
-                  
+
                     if (int.Parse(per) < result[a.ToCharArray()[0] - '0'])
                         result[a.ToCharArray()[0] - '0'] = int.Parse(per);
 
@@ -209,7 +335,7 @@ namespace shuzi
                 for (int x = 0; x < 10; x++)
                 {
 
-                    richTextBox1.AppendText(  x.ToString()+ "----------" + (result[x]).ToString() + '\n');
+                    richTextBox1.AppendText(x.ToString() + "----------" + (result[x]).ToString() + '\n');
                     if (result[x] < finallRes)
                     {
                         finallRes = result[x];
@@ -218,20 +344,32 @@ namespace shuzi
                 }
                 richTextBox1.AppendText("--------------\n" + "最后匹配的结果为" + num.ToString() + '\n');
 
-                
+
                 read.Close();
                 FinallResult = num;
                 button8.Enabled = true;
                 button7.Enabled = true;
-                
+
             }
             catch (Exception a)
             {
                 MessageBox.Show(a.Message);
-               
+
             }
+
+        }
+
+        private void bysZuiXiaoCuoWu()
+        {
             
         }
+
+        private void bysZuiXiaoFengXian()
+        {
+           
+        }
+
+
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -365,5 +503,7 @@ namespace shuzi
             }
             
         }
+       
+
     }
 }

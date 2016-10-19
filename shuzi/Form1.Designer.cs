@@ -56,6 +56,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.button9 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -149,9 +150,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(679, 71);
+            this.button4.Location = new System.Drawing.Point(608, 38);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(94, 23);
             this.button4.TabIndex = 10;
             this.button4.Text = "匹配";
             this.button4.UseVisualStyleBackColor = true;
@@ -168,11 +169,10 @@
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.WhiteSmoke;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBox1.Enabled = false;
             this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.richTextBox1.Location = new System.Drawing.Point(432, 129);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(345, 449);
+            this.richTextBox1.Size = new System.Drawing.Size(342, 449);
             this.richTextBox1.TabIndex = 12;
             this.richTextBox1.Text = "";
             // 
@@ -251,7 +251,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(679, 42);
+            this.button6.Location = new System.Drawing.Point(333, 39);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 21;
@@ -314,11 +314,27 @@
             this.label8.TabIndex = 27;
             this.label8.Text = "该模板的正确数字：";
             // 
+            // listBox1
+            // 
+            this.listBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 19;
+            this.listBox1.Items.AddRange(new object[] {
+            "欧氏距离匹配",
+            "贝叶斯最小错误率匹配",
+            "贝叶斯最小风险匹配",
+            "贝叶斯二值数据匹配"});
+            this.listBox1.Location = new System.Drawing.Point(445, 39);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(157, 23);
+            this.listBox1.TabIndex = 29;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(785, 588);
+            this.ClientSize = new System.Drawing.Size(777, 588);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.button9);
             this.Controls.Add(this.label7);
@@ -388,6 +404,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
