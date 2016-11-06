@@ -96,6 +96,7 @@
             this.width.Name = "width";
             this.width.Size = new System.Drawing.Size(80, 21);
             this.width.TabIndex = 3;
+            this.width.Text = "28";
             // 
             // height
             // 
@@ -103,6 +104,7 @@
             this.height.Name = "height";
             this.height.Size = new System.Drawing.Size(80, 21);
             this.height.TabIndex = 4;
+            this.height.Text = "28";
             // 
             // label1
             // 
@@ -172,6 +174,7 @@
             this.richTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.richTextBox1.Location = new System.Drawing.Point(432, 129);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(342, 449);
             this.richTextBox1.TabIndex = 12;
             this.richTextBox1.Text = "";
@@ -321,8 +324,6 @@
             this.listBox1.ItemHeight = 19;
             this.listBox1.Items.AddRange(new object[] {
             "欧氏距离匹配",
-            "贝叶斯最小错误率匹配",
-            "贝叶斯最小风险匹配",
             "贝叶斯二值数据匹配"});
             this.listBox1.Location = new System.Drawing.Point(445, 39);
             this.listBox1.Name = "listBox1";
